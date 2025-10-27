@@ -2,7 +2,7 @@ import React from 'react';
 // import aboutme from "../assestes/about-us.png";
 import myimage from '../../../assestes/myphotoAbout.png';
 import svgbg from '../../../assestes/blob (3).svg';
-import blob from '../../../assestes/blob.svg';
+// import blob from '../../../assestes/blob.svg';
 import './About.css';
 
 function About() {

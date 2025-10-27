@@ -10,7 +10,7 @@
 }
 
 .Aboutpage>img {
-    width: 44%;
+    width: auto;
     padding: 1%;
 }
 
@@ -30,11 +30,11 @@
 }
 
 .sx {
-    height: 40rem;
+    /* height: 40rem; */
 }
 
 .img_section .sx2 {
-    bottom: 80%;
+    bottom: 70%;
     left: 0rem;
     width: 80%;
     animation: animate 4s linear infinite;
@@ -42,14 +42,14 @@
 }
 
 .img_section .sx1 {
-    height: 34rem;
+    height: 30rem;
     width: 100%;
     animation: anini 4s linear infinite;
 }
 
 @keyframes animate {
     50% {
-        bottom: 75%;
+        bottom: 60%;
     }
 }
 

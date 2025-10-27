@@ -3,7 +3,7 @@
 }
 
 .img_section .frontimg{
-    border-radius: 50%;
+    border-radius: 45%;
     top: 0rem;
     right: 20px;
     width: 450px;
@@ -13,7 +13,7 @@
 }
 .img_section .blob{
     position: relative;
-    bottom: 30rem;
+    bottom: 28rem;
     width: 500px;
     z-index: 0;
     animation: anini 4s linear infinite;
@@ -22,7 +22,7 @@
 @keyframes anini {
     50%{
         right: 1px;
-        bottom: 33rem;
+        bottom: 25rem;
     }
 }
 
