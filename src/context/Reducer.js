@@ -7,7 +7,7 @@ export const initialState = {
 export const reducer = (state, action) => {
   switch (action.type) {
     case "INIT":
-      return { ...state, all: action.payload, };
+      return { ...state, all: action.payload, filtered:action.payload };
     case "SET_FILTER":
       const filter = action.payload;
       if (filter === "All")

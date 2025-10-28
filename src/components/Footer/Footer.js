@@ -1,10 +1,9 @@
 import React from 'react';
 import './Footer.css';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-// import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+// import FacebookIcon from '@mui/icons-material/Facebook';
+// import TwitterIcon from '@mui/icons-material/Twitter';
+// import InstagramIcon from '@mui/icons-material/Instagram';
+// import YouTubeIcon from '@mui/icons-material/YouTube';
 
 function Footer() {
 
@@ -38,18 +37,17 @@ function Footer() {
     return (
         <div className='footercontainer'>
             <div className='footercontent'>
-                <div className="socialmedialinks">
+                {/* <div className="socialmedialinks">
                     <a href="/" className='fb'><FacebookIcon /></a>
                     <a href="/" className='twt'><TwitterIcon /></a>
                     <a href="/" className='insta'><InstagramIcon /></a>
                     <a href="/" className='yt'><YouTubeIcon /></a>
-                </div>
+                </div> */}
                 <div className='copyrights'>
                     <h3>Thank You</h3>
                     <h3>Copyright @ shubham</h3>
                 </div>
             </div>
-            {/* <button onClick={scroller} className="btn"><KeyboardDoubleArrowUpIcon id="scroll-up" /></button> */}
             <button onClick={scroller} className="btn"><img src="https://media.tenor.com/LUNANcnXLiUAAAAC/up-arrow.gif" alt="img" /></button>
             
 

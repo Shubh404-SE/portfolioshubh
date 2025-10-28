@@ -9,7 +9,7 @@ import Contact from "../Contact/Contact";
 import Services from "../Skill_Service/Services";
 import Education from "../Education/Education";
 import Skill from "../Skill_Service/Skill";
-import ProjectDetail from "../Project/ProjectDetail";
+import ProjectDetail from "../Project/Projects";
 import Alert from "../../Alert/Alert";
 
 function Home() {

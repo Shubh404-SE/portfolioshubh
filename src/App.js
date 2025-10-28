@@ -15,7 +15,7 @@ import Footer from "./components/Footer/Footer";
 import Services from "./components/Pages/Skill_Service/Services";
 import Education from "./components/Pages/Education/Education";
 import Skill from "./components/Pages/Skill_Service/Skill";
-import ProjectDetail from "./components/Pages/Project/ProjectDetail";
+import Projects from "./components/Pages/Project/Projects";
 import { useEffect } from "react";
 import { StateProvider } from "./context/StateContext";
 import reducer, {initialState} from "./context/Reducer.js";
@@ -35,7 +35,7 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contactme" element={<Contact />} />
           <Route exact path="/services" element={<Services />} />
-          <Route exact path="/projectdetails" element={<ProjectDetail />}>
+          <Route exact path="/projectdetails" element={<Projects />}>
             {" "}
           </Route>
           <Route
