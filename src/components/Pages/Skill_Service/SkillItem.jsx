@@ -1,33 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from "react";
 
 const SkillItem = (props) => {
-
-  const { language, percentage } = props.lang;
-   const [progress, setProgress] = useState(0);
+  const { language, percentage, icon } = props.lang;
+  const [progress, setProgress] = useState(0);
+  const [showProgress, setShowProgress] = useState(false);
+  const animationRef = useRef(null);
   const radius = 48;
   const circumference = 2 * Math.PI * radius;
 
- const animateProgress = () => {
+  // Start animation on hover
+  const handleMouseEnter = () => {
+    cancelAnimationFrame(animationRef.current);
+    setShowProgress(true);
     let start = 0;
-    const step = () => {
-      start += 2;
-      if (start <= percentage) {
+    const animate = () => {
+      start += 1; // control speed
+      if (start < percentage) {
         setProgress(start);
-        requestAnimationFrame(step);
+        animationRef.current = requestAnimationFrame(animate);
       } else {
         setProgress(percentage);
       }
     };
-    requestAnimationFrame(step);
+    animationRef.current = requestAnimationFrame(animate);
   };
 
- const resetProgress = () => setProgress(0);
+  // Reset when hover ends
+  const handleMouseLeave = () => {
+    cancelAnimationFrame(animationRef.current);
+    const decrease = () => {
+      setShowProgress(false);
+      setProgress((prev) => {
+        if (prev > 0) {
+          animationRef.current = requestAnimationFrame(decrease);
+          return Math.max(prev - 3, 0); 
+        }
+        return 0;
+      });
+    };
+    requestAnimationFrame(decrease);
+  };
 
   return (
     <div
-      data-aos="fade-up" data-aos-duration="3000"
-      onMouseEnter={animateProgress}
-      onMouseLeave={resetProgress}
+      data-aos="fade-up"
+      data-aos-duration="3000"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className="
         relative group w-64 h-72 
         bg-gradient-to-br from-gray-900/60 to-gray-800/30 
@@ -38,9 +57,8 @@ const SkillItem = (props) => {
         flex flex-col items-center justify-center
       "
     >
-
       <div className="absolute inset-0 bg-gradient-to-t from-cyan-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-700"></div>
-      {/* <div className="text-5xl mb-4 text-cyan-400 drop-shadow-md">{icon}</div> */}
+      <div className="text-5xl mb-4 text-cyan-400 drop-shadow-md">{icon}</div>
       <h3 className="text-lg font-semibold text-white tracking-wide mb-6">
         {language}
       </h3>
@@ -84,13 +102,13 @@ const SkillItem = (props) => {
         ></div>
 
         <span className="absolute inset-0 flex items-center justify-center text-cyan-400 text-xl font-bold">
-          {percentage}%
+          {showProgress ? progress : percentage}%
         </span>
       </div>
 
-      {/* <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div> */}
+      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
     </div>
   );
-}
+};
 
 export default SkillItem;
