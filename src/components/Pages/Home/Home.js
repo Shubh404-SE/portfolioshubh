@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 // import frontimg from "../assestes/bglogo.png";
 import myimage from "../../../assestes/myphotoHome.png";
 import svgbg from "../../../assestes/blob (2).svg";
@@ -20,7 +20,7 @@ function Home() {
   const banner = [clienName, clientEmail];
   return (
     <>
-      <div className="front">
+      <div className="front -mt-32">
         <div className="profile-container">
           <div
             data-aos="fade-up"
