@@ -55,7 +55,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative bg-gradient-to-b from-gray-900 via-gray-850 to-gray-800 py-28 text-gray-300"
+      className="relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-850 to-gray-800 py-24 text-gray-300"
     >
       <div className="container mx-auto px-6 lg:px-16 text-center">
         {/* Section Heading */}
@@ -64,7 +64,7 @@ export default function Services() {
           data-aos-anchor-placement="top-bottom"
           className="mb-14"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-white mb-4">
             What I Do
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
@@ -75,7 +75,7 @@ export default function Services() {
         </div>
 
         {/* Services Cards */}
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 justify-center">
+        <div className="relative grid gap-10 sm:grid-cols-2 lg:grid-cols-3 justify-center">
           {services.map((service) => (
             <div
               key={service.id}
@@ -87,7 +87,7 @@ export default function Services() {
             >
               {/* Icon Bubble */}
               <div
-                className="mb-6 flex items-center justify-center w-20 h-20 
+                className="relative mb-6 flex items-center justify-center w-20 h-20 
                            rounded-full bg-violet-600/20 group-hover:bg-violet-500/30 
                            ring-2 ring-violet-500/30 group-hover:ring-violet-400/50 
                            transition-all duration-500 ease-in-out transform 
@@ -127,9 +127,6 @@ export default function Services() {
             that truly matters. Not just code — craftsmanship.
           </p>
         </div>
-      </div>
-    </section>
-  );
       </div>
     </section>
   );

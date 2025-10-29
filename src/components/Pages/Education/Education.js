@@ -33,7 +33,7 @@ export default function Education() {
   return (
     <section
       id="education"
-      className="py-10 px-4 bg-gradient-to-b from-gray-800 to-gray-900 text-gray-200 relative overflow-hidden"
+      className="py-24 px-4 bg-gradient-to-b from-gray-900 via-gray-850 to-gray-800 text-gray-200 relative overflow-hidden"
     >
       <div className="container mx-auto px-6 lg:px-10 relative">
         <h1

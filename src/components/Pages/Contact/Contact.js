@@ -65,7 +65,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-950 text-white py-10 px-4">
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-950 text-white py-24 px-4">
       <h2 className="text-4xl font-bold mb-8 text-cyan-400">Contact Me</h2>
 
       {alert.show && (

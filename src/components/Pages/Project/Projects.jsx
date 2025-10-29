@@ -16,7 +16,7 @@ export default function Projects() {
   }, [dispatch]);
 
   return (
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="mx-auto px-10 md:px-32 lg:px-44 py-24 bg-gradient-to-b from-gray-900 via-gray-850 to-gray-800">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-200">
           My Projects
         </h2>
