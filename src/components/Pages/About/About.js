@@ -3,6 +3,11 @@ import myimage from "../../../assestes/myphotoAbout.png";
 import svgbg from "../../../assestes/blob (3).svg";
 
 export default function About() {
+import React from "react";
+import myimage from "../../../assestes/myphotoAbout.png";
+import svgbg from "../../../assestes/blob (3).svg";
+
+export default function About() {
   return (
     <section
       id="about"
@@ -73,6 +78,8 @@ export default function About() {
           />
         </div>
       </div>
+    </section>
+  );
     </section>
   );
 }

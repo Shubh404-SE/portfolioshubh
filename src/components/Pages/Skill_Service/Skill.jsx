@@ -15,9 +15,22 @@ function Skill() {
             <SkillItem key={i} lang={skill} />
           ))}
         </div>
+
+        {/* Closing Section */}
+        <div
+          data-aos="zoom-in"
+          className="mt-20 max-w-xl mx-auto text-center text-gray-300"
+        >
+          <h2 className="text-3xl font-semibold text-white mb-4">
+            Why Collaborate With Me?
+          </h2>
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Every project deserves focus and finesse. I bring both — technical
+            precision, creative insight, and a commitment to building something
+            that truly matters. Not just code — craftsmanship.
+          </p>
+        </div>
       </div>
     </section>
   );
 }
-
-export default Skill;

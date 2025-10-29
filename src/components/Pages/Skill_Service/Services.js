@@ -130,4 +130,7 @@ export default function Services() {
       </div>
     </section>
   );
+      </div>
+    </section>
+  );
 }
