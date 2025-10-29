@@ -1,12 +1,11 @@
 import ProjectList from "./ProjectList.js";
-import "./Project.css";
 import FilterDropDown from "./FilterDropDown.jsx";
 import { useStateProvider } from "../../../context/StateContext";
 import ProjectCard from "./ProjectCard.jsx";
 import { useEffect } from "react";
 
 export default function Projects() {
-  const [{ filtered, all }, dispatch] = useStateProvider();
+  const [{ filtered }, dispatch] = useStateProvider();
   const allTags = [
     "All",
     ...new Set(ProjectList.flatMap((project) => project.tags)),
@@ -17,8 +16,7 @@ export default function Projects() {
   }, [dispatch]);
 
   return (
-    <div className="projects_container">
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-6xl mx-auto px-6 py-10">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-200">
           My Projects
         </h2>
@@ -32,6 +30,5 @@ export default function Projects() {
           ))}
         </div>
       </div>
-    </div>
   );
 }
