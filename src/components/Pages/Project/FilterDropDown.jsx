@@ -2,7 +2,7 @@ import React from "react";
 import { useStateProvider } from "../../../context/StateContext";
 
 export default function FilterDropDown({tags}) {
-  const [{activeFilter, all}, dispatch ]= useStateProvider();
+  const [{activeFilter}, dispatch ]= useStateProvider();
 
   return (
     <div className="flex flex-wrap justify-center gap-3 my-6">

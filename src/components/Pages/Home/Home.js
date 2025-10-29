@@ -10,14 +10,10 @@ import Services from "../Skill_Service/Services";
 import Education from "../Education/Education";
 import Skill from "../Skill_Service/Skill";
 import ProjectDetail from "../Project/Projects";
-import Alert from "../../Alert/Alert";
+// import Alert from "../../Alert/Alert";
 
 function Home() {
   const navigate = useNavigate();
-  const [clienName, setName] = useState("");
-  const [clientEmail, setemail] = useState("");
-  const [showaltr, isaltr] = useState(false);
-  const banner = [clienName, clientEmail];
   return (
     <>
       <div className="front -mt-32">
@@ -70,19 +66,12 @@ function Home() {
           </div>
         </div>
       </div>
-      <Alert alert={banner} showaltr={showaltr} />
       <About />
       <Skill data-aos="zoom-in-down" />
       <Services />
       <ProjectDetail />
       <Education />
-      <Contact
-        name={clienName}
-        email={clientEmail}
-        setName={setName}
-        setEmail={setemail}
-        showaltr={isaltr}
-      />
+      <Contact/>
     </>
   );
 }

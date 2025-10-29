@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 const SkillItem = (props) => {
   const { language, percentage, icon } = props.lang;
@@ -14,7 +14,7 @@ const SkillItem = (props) => {
     setShowProgress(true);
     let start = 0;
     const animate = () => {
-      start += 1; // control speed
+      start += 1; 
       if (start < percentage) {
         setProgress(start);
         animationRef.current = requestAnimationFrame(animate);

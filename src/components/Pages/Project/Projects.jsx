@@ -7,11 +7,15 @@ import { useEffect } from "react";
 
 export default function Projects() {
   const [{ filtered, all }, dispatch] = useStateProvider();
-  const allTags = ["All", ...new Set(ProjectList.flatMap(project => project.tags))];
+  const allTags = [
+    "All",
+    ...new Set(ProjectList.flatMap((project) => project.tags)),
+  ];
+
   useEffect(() => {
     dispatch({ type: "INIT", payload: ProjectList });
   }, [dispatch]);
-  console.log(filtered, all);
+
   return (
     <div className="projects_container">
       <div className="max-w-6xl mx-auto px-6 py-12">

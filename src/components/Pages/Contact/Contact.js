@@ -1,83 +1,131 @@
-import React, { useRef } from 'react';
-import emailjs from '@emailjs/browser';
-import './Contact.css';
-// import Alert from '../../Alert/Alert';
+import React, { useState } from "react";
+import Alert from "../../Alert/Alert";
 
-function Contact({name, email, setName, setEmail, showaltr}) {
-    
-    const form = useRef();
+const Contact = () => {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [alert, setAlert] = useState({ show: false, type: "", message: "" });
 
-    const sendEmail = (e) => {
-        e.preventDefault(); // prevents the page from reloading when you hit “Send”
+  const BOT_TOKEN = "";
+  const CHAT_ID = "";
 
-        emailjs.sendForm('service_dmh87do', 'template_t6u9039', form.current, 'l8CKqWZsVo7vYAaty')
-            .then((result) => {
-                showaltr(true);
-                setTimeout(() => {
-                    showaltr(false);
-                }, 5000)
-                console.log("done");
-            }, (error) => {
-                console.log("error");
-            });
-    };
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    setAlert({ show: false, type: "", message: "" });
 
-    return (
-        <div data-aos="fade-up"
-            data-aos-duration="100" className='front contactbg'>
-            <div data-aos="zoom-out-up" className='contact-text'>
-                <h1>Contact Me</h1>
-                <p>For any type of online project please don't hesitate to get in touch with me. The fastest way is to send me your message using the following email contact@domain.com</p>
-            </div>
-            <div className="contactdetail">
-                {/* <div className='contactmethods'>
-                    <div className="contactaddress">
-                        <h2 className='heightlighted-text'>Address</h2>
-                        <p>Nawa City 341507<br /></p>
-                        <p>Rajasthan</p>
-                    </div>
-                    <div className="contactaddress">
-                        <h2 className='heightlighted-text'>E-Mail</h2>
-                        <p>shubhcodder014@gmail.com</p>
-                    </div>
-                    <div className="contactaddress">
-                        <h2 className='heightlighted-text'>Phone</h2>
-                        <p>+911023456789</p>
-                    </div>
-                    <div className="contactaddress">
-                        <h2 className='heightlighted-text'>WhatsApp</h2>
-                        <p>+911023456789</p>
-                    </div>
-                </div> */}
-                <div data-aos="fade-left"
-                    data-aos-anchor="#example-anchor"
-                    data-aos-offset="500"
-                    data-aos-duration="500" className="formlayout">
-                    <div className="contenttext formtext">
-                        <h2>Send message</h2>
-                    </div>
-                    {/* add a lable so that whenever a massage send  a banner showing your msg sent success..*/}
-                    <form data-aos="fade-up" data-aos-anchor-placement="top-center" ref={form} onSubmit={sendEmail}>
-                        <div className='input-item'>
-                            <input type="text" name="Name" id="name" onChange={(e) => setName(e.target.value)} value={name} required />
-                            <label htmlFor="name">Name</label>
-                        </div>
-                        <div className='input-item'>
-                            
-                            <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} required />
-                            <label htmlFor="email">Email</label>
-                        </div>
-                        <div className='input-item'>
-                            <textarea name="message" id="message" cols="30" rows="10" required></textarea>
-                            <label htmlFor="message">Write Your Message</label>
-                        </div>
-                        <button type='submit' value='send' className="btn btn-lightdark">Send Message</button>
-                    </form>
-                </div>
-            </div>
+    const text = `
+📬 *New Message from Portfolio Website*  
+👤 Name: ${form.name}  
+✉️ Email: ${form.email}  
+💬 Message: ${form.message}
+`;
+
+    try {
+      const res = await fetch(
+        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text,
+            parse_mode: "Markdown",
+          }),
+        }
+      );
+
+      if (res.ok) {
+        setAlert({
+          show: true,
+          type: "success",
+          message: "✅ Message sent successfully!",
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      console.error(error);
+      setAlert({
+        show: true,
+        type: "error",
+        message: "⚠️ Something went wrong. Please try again.",
+      });
+    } finally {
+      setSending(false);
+      setTimeout(() => {
+        setAlert({ show: false, type: "", message: "" });
+        setForm({ name: "", email: "", message: "" });
+      }, 3000);
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-950 text-white py-20 px-4 -mt-32">
+      <h2 className="text-3xl font-bold mb-8 text-cyan-400">Contact Me</h2>
+
+      {/* Alert Notification */}
+      {alert.show && (
+        <Alert alert={alert} form={form} />
+      )}
+
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray-900 p-8 rounded-2xl shadow-lg w-full max-w-lg border border-gray-800"
+      >
+        <div className="mb-5">
+          <label className="block text-gray-300 mb-2">Name</label>
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-cyan-500 outline-none"
+          />
         </div>
-    )
-}
 
-export default Contact
+        <div className="mb-5">
+          <label className="block text-gray-300 mb-2">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-cyan-500 outline-none"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-gray-300 mb-2">Message</label>
+          <textarea
+            name="message"
+            rows="4"
+            value={form.message}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-cyan-500 outline-none"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          disabled={sending}
+          className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 ${
+            sending
+              ? "bg-gray-700 cursor-not-allowed"
+              : "bg-gradient-to-r from-cyan-500 to-indigo-500 hover:opacity-90"
+          }`}
+        >
+          {sending ? "Sending..." : "Send Message"}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default Contact;
