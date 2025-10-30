@@ -25,7 +25,7 @@ export default function Education() {
       img: jnulogo,
       year: "2020–2025",
       title: "School of Engineering, JNU Delhi",
-      desc: "Currently pursuing B.Tech in Computer Science and Engineering. Current SGPA: 7.0, exploring AI and modern web technologies.",
+      desc: "Currently pursuing B.Tech in Computer Science and Engineering. Current CGPA: 7.55, exploring AI and modern web technologies.",
       aos: "fade-right",
     },
   ];

@@ -4,7 +4,7 @@ import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 export default function ProjectCard({ project }) {
   return (
     <div data-aos="fade-up" data-aos-duration="3000"
-      className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300"
+      className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300 min-h-full"
     >
       <img
         src={project.image}

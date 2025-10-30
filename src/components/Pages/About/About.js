@@ -11,7 +11,7 @@ export default function About() {
       <div
         data-aos="fade-left"
         data-aos-duration="800"
-        className="max-w-2xl text-gray-300 mt-10 md:mt-0"
+        className="max-w-2xl text-gray-300 mt-10 md:mt-0 text-justify"
       >
         <h1 className="text-4xl font-bold text-white mb-6 tracking-wide">
           About Me
