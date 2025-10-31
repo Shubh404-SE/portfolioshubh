@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import AddEditProjectModal from "./AddEditProjectModal";
-import ProjectCardAdmin from "./ProjectCardAdmin";
+import React, { useEffect, useState } from "react";
+import AddEditProject from "./AddEditModel";
+import ProjectCard from "./ProjectCard";
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState([
@@ -27,20 +27,27 @@ export default function AdminProjects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editProject, setEditProject] = useState(null);
 
+//   Fatch all projects
+  useEffect(()=>{
+// 
+  });
   const handleAddProject = (newProj) => {
     setProjects((prev) => [...prev, { ...newProj, id: Date.now() }]);
+    // post /project API call can be made here
   };
 
   const handleEditProject = (updatedProj) => {
     setProjects((prev) =>
       prev.map((p) => (p.id === updatedProj.id ? updatedProj : p))
     );
+    // Put /projects/:id API call can be made here
   };
 
   const handleDeleteProject = (id) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       setProjects((prev) => prev.filter((p) => p.id !== id));
     }
+    // Delete /projects/:id API call can be made here
   };
 
   return (
@@ -60,7 +67,7 @@ export default function AdminProjects() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {projects.map((project) => (
-          <ProjectCardAdmin
+          <ProjectCard
             key={project.id}
             project={project}
             onEdit={(proj) => {
@@ -73,7 +80,7 @@ export default function AdminProjects() {
       </div>
 
       {isModalOpen && (
-        <AddEditProjectModal
+        <AddEditProject
           onClose={() => setIsModalOpen(false)}
           onAdd={handleAddProject}
           onEdit={handleEditProject}
