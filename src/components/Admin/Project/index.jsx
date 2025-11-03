@@ -1,36 +1,18 @@
 import React, { useEffect, useState } from "react";
 import AddEditProject from "./AddEditModel";
 import ProjectCard from "./ProjectCard";
+import ProjectList from "../../../components/Pages/Project/ProjectList"
 
 export default function AdminProjects() {
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      title: "Portfolio Website",
-      description: "A personal portfolio built using React and TailwindCSS.",
-      tags: ["React", "Tailwind", "Frontend"],
-      image: "/images/portfolio.png",
-      github: "https://github.com/Shubh404-SE/portfolioshubh",
-      live: "https://shubham-tanwar.netlify.app/",
-    },
-    {
-      id: 2,
-      title: "Blog Platform",
-      description: "A modern blogging platform using MERN stack.",
-      tags: ["MongoDB", "Express", "React", "Node"],
-      image: "/images/blog.png",
-      github: "#",
-      live: "#",
-    },
-  ]);
+  const [projects, setProjects] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editProject, setEditProject] = useState(null);
 
 //   Fatch all projects
   useEffect(()=>{
-// 
-  });
+    setProjects(ProjectList);
+  }, []);
   const handleAddProject = (newProj) => {
     setProjects((prev) => [...prev, { ...newProj, id: Date.now() }]);
     // post /project API call can be made here

@@ -11,6 +11,7 @@ import Projects from "../components/Pages/Project/Projects.jsx";
 import Dashboard from "../components/Admin/dashboard/index.jsx";
 import ProtectedRoute from "./ProrectedRoute.js";
 import AdminProjects from "../components/Admin/Project/index.jsx";
+import AdminSkills from "../components/Admin/Skill/index.jsx";
 
 function AllRoutes() {
  
@@ -34,6 +35,7 @@ function AllRoutes() {
           <Route exact path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/admin/projects" element={<ProtectedRoute><AdminProjects /></ProtectedRoute>} />
+          <Route path="/admin/skills" element={<ProtectedRoute><AdminSkills /></ProtectedRoute>} />
         </Routes>
       </Router>
   );
