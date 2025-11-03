@@ -8,7 +8,7 @@ import Education from ".././components/Pages/Education/Education.js";
 import Skill from "../components/Pages/Skill_Service/Skill.jsx";
 import AdminLogin from "../components/Admin/AdminLogin/index.jsx";
 import Projects from "../components/Pages/Project/Projects.jsx";
-import Dashboard from "../components/Admin/dashboard/index.jsx";
+import Dashboard from "../components/Admin/Dashboard/index.jsx";
 import ProtectedRoute from "./ProrectedRoute.js";
 import AdminProjects from "../components/Admin/Project/index.jsx";
 import AdminSkills from "../components/Admin/Skill/index.jsx";
