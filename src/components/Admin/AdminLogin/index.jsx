@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,34 +14,26 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (formData.email === "admin@example.com" && formData.password === "admin123") {
-      localStorage.setItem("adminAuth", "true");
-      navigate("/admin/dashboard");
-    } else {
-      alert("Invalid credentials!");
-    }
-    // Uncomment below to enable real API login
-    /*
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) throw new Error(data.message || "Login failed");
-
+      const { data } = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        { email: formData.email, password: formData.password },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       localStorage.setItem("adminToken", data.token);
-      navigate("/admin/dashboard");
-    } catch (err) {
-      setError(err.message);
+      setTimeout(() => navigate("/admin/dashboard"), 100);
+      console.log(data.token);
+      return data;
+    } catch (error) {
+      console.error(
+        "Login failed:",
+        error.response?.data?.message || error.message
+      );
+      throw error;
     }
-    */
   };
-
   return (
     <div className="min-h-screen bg-[#1b1f2f] flex items-center justify-center">
       <div className="bg-[#26293c] rounded-xl shadow-xl p-8 w-[90%] sm:w-[400px] text-gray-200">

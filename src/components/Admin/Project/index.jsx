@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AddEditProject from "./AddEditModel";
 import ProjectCard from "./ProjectCard";
-import ProjectList from "../../../components/Pages/Project/ProjectList"
+import {
+  getAllProjects,
+  addProject,
+  updateProject,
+  deleteProject,
+} from "../../../utils/Routes.js";
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState([]);
@@ -9,27 +14,59 @@ export default function AdminProjects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editProject, setEditProject] = useState(null);
 
-//   Fatch all projects
-  useEffect(()=>{
-    setProjects(ProjectList);
-  }, []);
-  const handleAddProject = (newProj) => {
-    setProjects((prev) => [...prev, { ...newProj, id: Date.now() }]);
-    // post /project API call can be made here
-  };
-
-  const handleEditProject = (updatedProj) => {
-    setProjects((prev) =>
-      prev.map((p) => (p.id === updatedProj.id ? updatedProj : p))
-    );
-    // Put /projects/:id API call can be made here
-  };
-
-  const handleDeleteProject = (id) => {
-    if (window.confirm("Are you sure you want to delete this project?")) {
-      setProjects((prev) => prev.filter((p) => p.id !== id));
+  const fetchProjects = async () => {
+    try {
+      const data = await getAllProjects();
+      setProjects(data);
+    } catch (err) {
+      console.error("Error fetching projects:", err);
     }
-    // Delete /projects/:id API call can be made here
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const handleAddProject = async (newProj) => {
+    console.log("Adding project:", newProj);
+    try {
+      const data = await addProject(newProj);
+      if (data?._id) setProjects((prev) => [{ ...newProj, _id: data._id }, ...prev]);
+      else console.error("Failed to add project, no ID returned", data.message);
+    } catch (err) {
+      console.error("Error adding project:", err);
+    }
+  };
+
+  const handleEditProject = async (updatedProj) => {
+    try{
+      const data = await updateProject(updatedProj._id, updatedProj)
+      if(data._id) {
+        setProjects((prev) =>
+          prev.map((p) => (p._id === updatedProj._id ? updatedProj : p))
+        );
+      }
+      else{
+        console.log("Failed to update project", data.message);
+      }
+    } catch(err) {
+      console.error("Error updating project:", err);
+    };
+  };
+
+  const handleDeleteProject = async (id) => {
+
+    try{
+      const data = await deleteProject(id);
+      if(data._id) {
+        setProjects((prev) => prev.filter((p) => p._id !== id));
+      }
+      else{
+        console.log("Failed to delete project", data.message);
+      }
+    } catch(err) {
+      console.error("Error deleting project:", err);
+    }
   };
 
   return (
@@ -50,13 +87,13 @@ export default function AdminProjects() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {projects.map((project) => (
           <ProjectCard
-            key={project.id}
+            key={project._id}
             project={project}
             onEdit={(proj) => {
               setEditProject(proj);
               setIsModalOpen(true);
             }}
-            onDelete={handleDeleteProject}
+            onDelete={() => handleDeleteProject(project._id)}
           />
         ))}
       </div>
