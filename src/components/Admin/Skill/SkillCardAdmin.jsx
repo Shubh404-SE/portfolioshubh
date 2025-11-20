@@ -1,7 +1,33 @@
 import React from "react";
+import {
+  SiC,
+  SiCplusplus,
+  SiPython,
+  SiJavascript,
+  SiReact,
+  SiCss3,
+  SiHtml5,
+} from "react-icons/si";
 
 export default function SkillCardAdmin({ skill, onEdit, onDelete }) {
   const { language, percentage, icon } = skill;
+  const cicons = {
+    SiC: <SiC className="text-sky-400 text-5xl" />,
+
+    SiCplusplus: <SiCplusplus className="text-blue-400 text-5xl" />,
+
+    SiPython: <SiPython className="text-yellow-400 text-5xl" />,
+
+    SiJavascript: <SiJavascript className="text-yellow-300 text-5xl" />,
+
+    SiReact: <SiReact className="text-cyan-400 text-5xl" />,
+
+    SiCss3: <SiCss3 className="text-blue-500 text-5xl" />,
+
+    SiHtml5: <SiHtml5 className="text-orange-500 text-5xl" />,
+  };
+  const IconComponent = cicons[icon];
+  // console.log(IconComponent, <SiC />);
 
   return (
     <div className="bg-[#26293c] hover:bg-[#2e3246] p-5 rounded-xl shadow-lg flex flex-col items-center justify-between transition-all duration-300">
@@ -30,7 +56,9 @@ export default function SkillCardAdmin({ skill, onEdit, onDelete }) {
               cy="48"
             />
           </svg>
-          <div className="absolute inset-0 flex items-center justify-center">{icon}</div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* <IconComponent />; */}
+          </div>
         </div>
 
         <h3 className="text-lg font-semibold text-blue-400">{language}</h3>
@@ -45,7 +73,7 @@ export default function SkillCardAdmin({ skill, onEdit, onDelete }) {
           Edit
         </button>
         <button
-          onClick={() => onDelete(skill.id)}
+          onClick={() => onDelete(skill._id)}
           className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm font-semibold"
         >
           Delete

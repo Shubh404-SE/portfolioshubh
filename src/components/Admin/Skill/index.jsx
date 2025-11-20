@@ -1,35 +1,60 @@
-import React, { useState } from "react";
-import { SiC, SiCplusplus, SiPython, SiJavascript, SiReact, SiCss3, SiHtml5 } from "react-icons/si";
+import React, { useEffect, useState } from "react";
 import SkillCardAdmin from "./SkillCardAdmin";
 import AddEditSkillModal from "./AddEditSkillModel";
+import {
+  addSkill,
+  deleteSkill,
+  getAllSkills,
+  updateSkill,
+} from "../../../utils/Routes";
 
 export default function AdminSkills() {
-  const [skills, setSkills] = useState([
-    { id: 1, language: "C", percentage: 76, icon: <SiC className="text-sky-400 text-5xl" /> },
-    { id: 2, language: "C++", percentage: 80, icon: <SiCplusplus className="text-blue-400 text-5xl" /> },
-    { id: 3, language: "Python", percentage: 45, icon: <SiPython className="text-yellow-400 text-5xl" /> },
-    { id: 4, language: "JavaScript", percentage: 71, icon: <SiJavascript className="text-yellow-300 text-5xl" /> },
-    { id: 5, language: "React", percentage: 75, icon: <SiReact className="text-cyan-400 text-5xl" /> },
-    { id: 6, language: "CSS", percentage: 85, icon: <SiCss3 className="text-blue-500 text-5xl" /> },
-    { id: 7, language: "HTML", percentage: 91, icon: <SiHtml5 className="text-orange-500 text-5xl" /> },
-  ]);
+  const [skills, setSkills] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editSkill, setEditSkill] = useState(null);
 
-  const handleAddSkill = (newSkill) => {
-    setSkills((prev) => [...prev, { ...newSkill, id: Date.now() }]);
+  const fetchSkills = async () => {
+    try {
+      const data = await getAllSkills();
+      setSkills(data);
+    } catch (err) {
+      console.error("Error fetching projects:", err);
+    }
   };
 
-  const handleEditSkill = (updatedSkill) => {
-    setSkills((prev) =>
-      prev.map((s) => (s.id === updatedSkill.id ? updatedSkill : s))
-    );
+  useEffect(() => {
+    fetchSkills();
+  }, []);
+
+  const handleAddSkill = async (newSkill) => {
+    try {
+      const data = await addSkill(newSkill);
+      setSkills((prev) => [data, ...prev]);
+    } catch (err) {
+      console.error("Error adding skill:", err);
+    }
   };
 
-  const handleDeleteSkill = (id) => {
-    if (window.confirm("Are you sure you want to delete this skill?")) {
-      setSkills((prev) => prev.filter((s) => s.id !== id));
+  const handleEditSkill = async (updatedSkill) => {
+    console.log("Updating skill:", updatedSkill);
+    try {
+      const data = await updateSkill(updatedSkill._id, updatedSkill);
+      if (data._id)
+        setSkills((prev) =>
+          prev.map((s) => (s._id === updatedSkill._id ? updatedSkill : s))
+        );
+    } catch (err) {
+      console.error("Error editing skill:", err);
+    }
+  };
+
+  const handleDeleteSkill = async (id) => {
+    try {
+      const data = await deleteSkill(id);
+      if (data) setSkills((prev) => prev.filter((s) => s._id !== id));
+    } catch (err) {
+      console.error("Error deleting skill:", err);
     }
   };
 
@@ -54,7 +79,7 @@ export default function AdminSkills() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {skills.map((skill) => (
             <SkillCardAdmin
-              key={skill.id}
+              key={skill._id}
               skill={skill}
               onEdit={(s) => {
                 setEditSkill(s);

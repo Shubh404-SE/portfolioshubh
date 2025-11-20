@@ -23,3 +23,27 @@ export const deleteProject = async (id) => {
   const { data } = await API.delete(`/projects/${id}`);
   return data;
 };
+
+// Fetch all skills
+export const getAllSkills = async () => {
+  const { data } = await API.get("/skills");
+  return data;
+};
+
+// Add new skill
+export const addSkill = async (skill) => {
+  const { data } = await API.post("/skills", skill);
+  return data;
+};
+
+// Update skill
+export const updateSkill = async (id, updatedData) => {
+  const { data } = await API.put(`/skills/${id}`, updatedData);
+  return data;
+};
+
+// Delete skill
+export const deleteSkill = async (id) => {
+  const { data } = await API.delete(`/skills/${id}`);
+  return data;
+};

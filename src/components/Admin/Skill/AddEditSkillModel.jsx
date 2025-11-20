@@ -9,21 +9,36 @@ import {
   SiHtml5,
 } from "react-icons/si";
 
-export default function AddEditSkillModal({ onClose, onAdd, onEdit, editData }) {
+export default function AddEditSkillModal({
+  onClose,
+  onAdd,
+  onEdit,
+  editData,
+}) {
   const [form, setForm] = useState({
     language: "",
     percentage: "",
     iconName: "SiReact",
   });
 
+  // const icons = {
+  //   SiC: <SiC className="text-sky-400 text-4xl" />,
+  //   SiCplusplus: <SiCplusplus className="text-blue-400 text-4xl" />,
+  //   SiPython: <SiPython className="text-yellow-400 text-4xl" />,
+  //   SiJavascript: <SiJavascript className="text-yellow-300 text-4xl" />,
+  //   SiReact: <SiReact className="text-cyan-400 text-4xl" />,
+  //   SiCss3: <SiCss3 className="text-blue-500 text-4xl" />,
+  //   SiHtml5: <SiHtml5 className="text-orange-500 text-4xl" />,
+  // };
+
   const icons = {
-    SiC: <SiC className="text-sky-400 text-4xl" />,
-    SiCplusplus: <SiCplusplus className="text-blue-400 text-4xl" />,
-    SiPython: <SiPython className="text-yellow-400 text-4xl" />,
-    SiJavascript: <SiJavascript className="text-yellow-300 text-4xl" />,
-    SiReact: <SiReact className="text-cyan-400 text-4xl" />,
-    SiCss3: <SiCss3 className="text-blue-500 text-4xl" />,
-    SiHtml5: <SiHtml5 className="text-orange-500 text-4xl" />,
+    SiC: "Sic",
+    SiCplusplus: "SiCplusplus",
+    SiPython: "SiPython",
+    SiJavascript: "SiJavascript",
+    SiReact: "SiReact",
+    SiCss3: "SiCss3",
+    SiHtml5: "SiHtml5",
   };
 
   useEffect(() => {
@@ -46,13 +61,15 @@ export default function AddEditSkillModal({ onClose, onAdd, onEdit, editData }) 
   const handleSubmit = (e) => {
     e.preventDefault();
     const skillData = {
-      id: editData ? editData.id : Date.now(),
       language: form.language,
       percentage: Number(form.percentage),
       icon: icons[form.iconName],
     };
-
-    editData ? onEdit(skillData) : onAdd(skillData);
+    if (editData) {
+      onEdit({ ...skillData, _id: editData._id });
+    } else {
+      onAdd(skillData);
+    }
     onClose();
   };
 
@@ -86,7 +103,9 @@ export default function AddEditSkillModal({ onClose, onAdd, onEdit, editData }) 
           />
 
           <div>
-            <label className="block mb-1 text-gray-400 text-sm">Choose Icon:</label>
+            <label className="block mb-1 text-gray-400 text-sm">
+              Choose Icon:
+            </label>
             <select
               name="iconName"
               value={form.iconName}
