@@ -1,33 +1,10 @@
 import React from "react";
-import {
-  SiC,
-  SiCplusplus,
-  SiPython,
-  SiJavascript,
-  SiReact,
-  SiCss3,
-  SiHtml5,
-} from "react-icons/si";
+import { techIcons } from "../../../utils/skillIcons";
 
 export default function SkillCardAdmin({ skill, onEdit, onDelete }) {
-  const { language, percentage, icon } = skill;
-  const cicons = {
-    SiC: <SiC className="text-sky-400 text-5xl" />,
+  const { language, percentage} = skill;
 
-    SiCplusplus: <SiCplusplus className="text-blue-400 text-5xl" />,
-
-    SiPython: <SiPython className="text-yellow-400 text-5xl" />,
-
-    SiJavascript: <SiJavascript className="text-yellow-300 text-5xl" />,
-
-    SiReact: <SiReact className="text-cyan-400 text-5xl" />,
-
-    SiCss3: <SiCss3 className="text-blue-500 text-5xl" />,
-
-    SiHtml5: <SiHtml5 className="text-orange-500 text-5xl" />,
-  };
-  const IconComponent = cicons[icon];
-  // console.log(IconComponent, <SiC />);
+  const IconComponent = techIcons[language];
 
   return (
     <div className="bg-[#26293c] hover:bg-[#2e3246] p-5 rounded-xl shadow-lg flex flex-col items-center justify-between transition-all duration-300">
@@ -57,7 +34,7 @@ export default function SkillCardAdmin({ skill, onEdit, onDelete }) {
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            {/* <IconComponent />; */}
+            {IconComponent}
           </div>
         </div>
 

@@ -1,8 +1,23 @@
-import React from "react";
-import Lang from "./SkillLan";
+import React, { useEffect } from "react";
 import SkillItem from "./SkillItem";
+import { getAllSkills } from "../../../utils/Routes";
 
 export default function Skill() {
+  const [skills, setSkills] = React.useState([]);
+    const fetchSkills = async () => {
+      try {
+        const data = await getAllSkills();
+        if(data) setSkills(data);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
+    };
+  
+    useEffect(() => {
+      fetchSkills();
+    }, []);
+
+
   return (
     <section className="bg-gray-950 text-white py-24 px-4">
       <div className="container mx-auto px-6">
@@ -11,8 +26,8 @@ export default function Skill() {
         </h2>
 
         <div className="flex flex-wrap justify-center gap-8">
-          {Lang.map((skill, i) => (
-            <SkillItem key={i} lang={skill} />
+          {skills.map((skill, i) => (
+            <SkillItem key={skill._id} lang={skill} />
           ))}
         </div>
       </div>

@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  SiC,
-  SiCplusplus,
-  SiPython,
-  SiJavascript,
-  SiReact,
-  SiCss3,
-  SiHtml5,
-} from "react-icons/si";
+import { techIcons } from "../../../utils/skillIcons";
 
 export default function AddEditSkillModal({
   onClose,
@@ -18,38 +10,13 @@ export default function AddEditSkillModal({
   const [form, setForm] = useState({
     language: "",
     percentage: "",
-    iconName: "SiReact",
   });
-
-  // const icons = {
-  //   SiC: <SiC className="text-sky-400 text-4xl" />,
-  //   SiCplusplus: <SiCplusplus className="text-blue-400 text-4xl" />,
-  //   SiPython: <SiPython className="text-yellow-400 text-4xl" />,
-  //   SiJavascript: <SiJavascript className="text-yellow-300 text-4xl" />,
-  //   SiReact: <SiReact className="text-cyan-400 text-4xl" />,
-  //   SiCss3: <SiCss3 className="text-blue-500 text-4xl" />,
-  //   SiHtml5: <SiHtml5 className="text-orange-500 text-4xl" />,
-  // };
-
-  const icons = {
-    SiC: "Sic",
-    SiCplusplus: "SiCplusplus",
-    SiPython: "SiPython",
-    SiJavascript: "SiJavascript",
-    SiReact: "SiReact",
-    SiCss3: "SiCss3",
-    SiHtml5: "SiHtml5",
-  };
 
   useEffect(() => {
     if (editData) {
-      const iconKey = Object.keys(icons).find(
-        (key) => icons[key].type === editData.icon.type
-      );
       setForm({
         language: editData.language,
         percentage: editData.percentage,
-        iconName: iconKey || "SiReact",
       });
     }
   }, [editData]);
@@ -61,9 +28,8 @@ export default function AddEditSkillModal({
   const handleSubmit = (e) => {
     e.preventDefault();
     const skillData = {
-      language: form.language,
+      language: form.language.charAt(0).toUpperCase() + form.language.slice(1),
       percentage: Number(form.percentage),
-      icon: icons[form.iconName],
     };
     if (editData) {
       onEdit({ ...skillData, _id: editData._id });
@@ -81,14 +47,26 @@ export default function AddEditSkillModal({
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            name="language"
-            placeholder="Skill Name"
-            value={form.language}
-            onChange={handleChange}
-            className="bg-[#1f2233] px-4 py-2 rounded"
-            required
-          />
+      
+          <div>
+            <label className="block mb-1 text-gray-400 text-sm">
+              Select Skill:
+            </label>
+            <select
+              name="language"
+              value={form.language}
+              onChange={handleChange}
+              className="bg-[#1f2233] px-3 py-2 rounded w-full"
+              required
+            >
+              <option value="" disabled>Select language</option>
+              {Object.keys(techIcons).map((lang) => (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <input
             name="percentage"
@@ -101,24 +79,6 @@ export default function AddEditSkillModal({
             className="bg-[#1f2233] px-4 py-2 rounded"
             required
           />
-
-          <div>
-            <label className="block mb-1 text-gray-400 text-sm">
-              Choose Icon:
-            </label>
-            <select
-              name="iconName"
-              value={form.iconName}
-              onChange={handleChange}
-              className="bg-[#1f2233] px-3 py-2 rounded w-full"
-            >
-              {Object.keys(icons).map((key) => (
-                <option key={key} value={key}>
-                  {key.replace("Si", "")}
-                </option>
-              ))}
-            </select>
-          </div>
 
           <div className="flex justify-end gap-4 mt-4">
             <button

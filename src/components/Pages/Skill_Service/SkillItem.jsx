@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
+import { techIcons } from "../../../utils/skillIcons";
 
 const SkillItem = (props) => {
-  const { language, percentage, icon } = props.lang;
+  const { language, percentage} = props.lang;
   const [progress, setProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
   const animationRef = useRef(null);
   const radius = 48;
   const circumference = 2 * Math.PI * radius;
 
+  const IconComponent = techIcons[language];
   // Start animation on hover
   const handleMouseEnter = () => {
     cancelAnimationFrame(animationRef.current);
@@ -58,7 +60,7 @@ const SkillItem = (props) => {
       "
     >
       <div className="absolute inset-0 bg-gradient-to-t from-cyan-600/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-700"></div>
-      <div className="text-5xl mb-4 text-cyan-400 drop-shadow-md">{icon}</div>
+      <div className="text-5xl mb-4 text-cyan-400 drop-shadow-md">{IconComponent}</div>
       <h3 className="text-lg font-semibold text-white tracking-wide mb-6">
         {language}
       </h3>

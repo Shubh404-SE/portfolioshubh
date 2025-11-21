@@ -7,12 +7,13 @@ import {
   updateProject,
   deleteProject,
 } from "../../../utils/Routes.js";
+import Alert from "../../Alert/Alert.js";
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editProject, setEditProject] = useState(null);
+  const [alert, setAlert] = useState({ show: false, type: "", message: "" });
 
   const fetchProjects = async () => {
     try {
@@ -28,49 +29,89 @@ export default function AdminProjects() {
   }, []);
 
   const handleAddProject = async (newProj) => {
-    console.log("Adding project:", newProj);
+    setAlert({ show: false, type: "", message: "" });
     try {
       const data = await addProject(newProj);
-      if (data?._id) setProjects((prev) => [{ ...newProj, _id: data._id }, ...prev]);
-      else console.error("Failed to add project, no ID returned", data.message);
+      if (data?._id) {
+        setProjects((prev) => [{ ...newProj, _id: data._id }, ...prev]);
+        setAlert({
+          show: true,
+          type: "success",
+          message: "✅ Project added successfully!",
+        });
+      } else
+        console.error("Failed to add project, no ID returned", data.message);
     } catch (err) {
+      setAlert({
+        show: true,
+        type: "error",
+        message: "⚠️ Something went wrong. Please try again.",
+      });
       console.error("Error adding project:", err);
+    } finally {
+      setTimeout(() => {
+        setAlert({ show: false, type: "", message: "" });
+      }, 3000);
     }
   };
 
   const handleEditProject = async (updatedProj) => {
-    try{
-      const data = await updateProject(updatedProj._id, updatedProj)
-      if(data._id) {
+    setAlert({ show: false, type: "", message: "" });
+    try {
+      const data = await updateProject(updatedProj._id, updatedProj);
+      if (data._id) {
         setProjects((prev) =>
           prev.map((p) => (p._id === updatedProj._id ? updatedProj : p))
         );
-      }
-      else{
+        setAlert({
+          show: true,
+          type: "success",
+          message: "✅ Project updated successfully!",
+        });
+      } else {
         console.log("Failed to update project", data.message);
       }
-    } catch(err) {
+    } catch (err) {
+      setAlert({
+        show: true,
+        type: "error",
+        message: "⚠️ Something went wrong. Please try again.",
+      });
       console.error("Error updating project:", err);
-    };
+    } finally {
+      setTimeout(() => {
+        setAlert({ show: false, type: "", message: "" });
+      }, 3000);
+    }
   };
 
   const handleDeleteProject = async (id) => {
-
-    try{
+    setAlert({ show: false, type: "", message: "" });
+    try {
       const data = await deleteProject(id);
-      if(data._id) {
-        setProjects((prev) => prev.filter((p) => p._id !== id));
-      }
-      else{
-        console.log("Failed to delete project", data.message);
-      }
-    } catch(err) {
+      setProjects((prev) => prev.filter((p) => p._id !== id));
+      setAlert({
+        show: true,
+        type: "success",
+        message: "✅ Project deleted successfully!",
+      });
+    } catch (err) {
+      setAlert({
+        show: true,
+        type: "error",
+        message: "⚠️ Something went wrong. Please try again.",
+      });
       console.error("Error deleting project:", err);
+    } finally {
+      setTimeout(() => {
+        setAlert({ show: false, type: "", message: "" });
+      }, 3000);
     }
   };
 
   return (
     <div className="min-h-screen bg-[#1b1f2f] text-gray-100 p-6">
+      {alert.show && <Alert alert={alert} />}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-blue-400">Manage Projects</h1>
         <button
