@@ -47,3 +47,21 @@ export const deleteSkill = async (id) => {
   const { data } = await API.delete(`/skills/${id}`);
   return data;
 };
+
+// send message
+export const sendMessage = async (message) => {
+  const { data } = await API.post("/message/send", message);
+  return data;
+};
+
+// fetch all messages
+export const fetchMessages = async () => {
+  const { data } = await API.get("/message");
+  return data;
+};
+
+// delete message
+export const deleteMessage = async (id) => {
+  const { data } = await API.delete(`/message/${id}`);
+  return data;
+};

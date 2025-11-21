@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Alert from "../../Alert/Alert";
+import { sendMessage } from "../../../utils/Routes";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -13,33 +14,66 @@ const Contact = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setSending(true);
+//     setAlert({ show: false, type: "", message: "" });
+
+//     const text = `
+// 📬 *New Message from Portfolio Website*  
+// 👤 Name: ${form.name}  
+// ✉️ Email: ${form.email}  
+// 💬 Message: ${form.message}
+// `;
+
+//     try {
+//       const res = await fetch(
+//         `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+//         {
+//           method: "POST",
+//           headers: { "Content-Type": "application/json" },
+//           body: JSON.stringify({
+//             chat_id: CHAT_ID,
+//             text,
+//             parse_mode: "Markdown",
+//           }),
+//         }
+//       );
+
+//       if (res.ok) {
+//         setAlert({
+//           show: true,
+//           type: "success",
+//           message: "✅ Message sent successfully!",
+//         });
+//       } else {
+//         throw new Error("Failed to send message");
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       setAlert({
+//         show: true,
+//         type: "error",
+//         message: "⚠️ Something went wrong. Please try again.",
+//       });
+//     } finally {
+//       setSending(false);
+//       setTimeout(() => {
+//         setAlert({ show: false, type: "", message: "" });
+//         setForm({ name: "", email: "", message: "" });
+//       }, 3000);
+//     }
+//   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
     setAlert({ show: false, type: "", message: "" });
 
-    const text = `
-📬 *New Message from Portfolio Website*  
-👤 Name: ${form.name}  
-✉️ Email: ${form.email}  
-💬 Message: ${form.message}
-`;
-
     try {
-      const res = await fetch(
-        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text,
-            parse_mode: "Markdown",
-          }),
-        }
-      );
+      const res = await sendMessage(form);
 
-      if (res.ok) {
+      if (res.data) {
         setAlert({
           show: true,
           type: "success",
@@ -69,7 +103,7 @@ const Contact = () => {
       <h2 className="text-4xl font-bold mb-8 text-cyan-400">Contact Me</h2>
 
       {alert.show && (
-        <Alert alert={alert} form={form} />
+        <Alert alert={alert} />
       )}
 
       <form
