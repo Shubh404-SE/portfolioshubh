@@ -3,7 +3,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import InfoIcon from "@mui/icons-material/Info";
 
-export default function Alert({ alert, form }) {
+export default function Alert({ alert }) {
   const [progress, setProgress] = useState(100);
   useEffect(() => {
     if (alert.show) {
@@ -57,20 +57,6 @@ export default function Alert({ alert, form }) {
         <h4 className="text-xl font-bold text-white mb-1 tracking-wide">
           {alert.message}
         </h4>
-
-        {alert.type === "success" && (
-          <p className="text-sm text-gray-200 leading-relaxed">
-            Thank you,{" "}
-            <span className="font-semibold text-violet-200">
-              {form.name || "friend"}
-            </span>
-            . I’ll get back to you soon at{" "}
-            <span className="font-semibold text-violet-300">
-              {form.email || "your email"}
-            </span>
-            .
-          </p>
-        )}
       </div>
 
 

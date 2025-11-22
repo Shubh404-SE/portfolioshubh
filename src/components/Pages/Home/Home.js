@@ -7,7 +7,6 @@ import Contact from "../Contact/Contact";
 import HeroSection from "../../HeroSection/HeroSection";
 
 export default function Home() {
-
   return (
     <>
       <HeroSection />
