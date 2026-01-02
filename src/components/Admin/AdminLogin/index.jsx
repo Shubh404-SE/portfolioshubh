@@ -1,10 +1,11 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../../utils/Routes.js";
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -14,24 +15,21 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        { email: formData.email, password: formData.password },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      localStorage.setItem("adminToken", data.token);
-      setTimeout(() => navigate("/admin/dashboard"), 100);
-      console.log(data.token);
+      const data = await login(formData.email, formData.password);
+      if (data?.token) {
+        localStorage.setItem("adminToken", data.token);
+        setTimeout(() => navigate("/admin/dashboard"), 100);
+      } else {
+        setError("Invalid login response");
+      }
       return data;
-    } catch (error) {
-      console.error(
-        "Login failed:",
-        error.response?.data?.message || error.message
-      );
-      throw error;
+    } catch (err) {
+      console.error("Login failed:", err.response?.data?.message || err.message);
+      setError(err.response?.data?.message || err.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -68,9 +66,10 @@ export default function AdminLogin() {
           />
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 py-2 rounded font-semibold text-white transition duration-300"
+            disabled={loading}
+            className="bg-blue-500 hover:bg-blue-600 py-2 rounded font-semibold text-white transition duration-300 disabled:opacity-50"
           >
-            Log In
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
       </div>

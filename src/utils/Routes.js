@@ -65,3 +65,9 @@ export const deleteMessage = async (id) => {
   const { data } = await API.delete(`/message/${id}`);
   return data;
 };
+
+
+export const login = async (email, password) => {
+  const { data } = await API.post("/auth/login", { email, password });
+  return data;
+};
